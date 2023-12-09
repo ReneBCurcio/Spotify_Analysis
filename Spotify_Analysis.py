@@ -7,7 +7,13 @@ st.set_page_config(
         page_title="Spotify Songs"
 )
 
-df= pd.read_csv("01 Spotify.csv")
+@st.cache_data
+def load_data():
+    df = pd.read_csv("01 Spotify.csv")
+    return df
+df = load_data()
+
+st.session_state["df_spotify"] = df
 
 artist = st.sidebar.selectbox("Artista", df["Artist"].value_counts().index)
 
